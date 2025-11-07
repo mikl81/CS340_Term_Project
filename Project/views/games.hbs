@@ -1,0 +1,101 @@
+<div class="pageDesc">
+    <h1>Games</h1>
+    <p>Games featured on our review site</p>
+</div>
+
+{{!Read table}}
+<table>
+    <thead>
+        <tr>
+            {{#each game.[0]}}
+            <th>{{@key}}</th>
+        </tr>
+        {{/each}}
+        <th></th>
+    </thead>
+    <tbody>
+        {{#each games}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.releaseYear}}</td>
+            <td>{{this.ESRB}}</td>
+            <td>{{this.developer}}</td>
+            {{! DELETE form }}
+            <form id='delete_game_form'>
+                <input type='hidden' name='delete_game_id' value='{{this.id}}' />
+                <input type='hidden' name='delete_game_title' value='{{this.title}}' />
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Create a Game</h2>
+<form class='cuForm' id='create_game_form'>
+    <label for='create_game_title'>Title: </label>
+    <input type='text' name='create_game_title' id='create_game_title' required />
+
+    <label for='create_game_releaseYear'>Release Year: </label>
+    <input type='number' name='create_game_releaseYear' id='create_game_releaseYear' min="1970" max="2099" placeholder="YYYY"/>
+
+    <label for='create_game_ESRB'>ESRB: </label>
+    <select name='create_game_ESRB' id='create_game_ESRB'>
+        <option value='NULL' selected>Select a rating</option>
+        <option value='NULL'>&lt; None &gt;</option>
+        {{#each ESRB}}
+        <option value='{{this.id}}' required>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for='create_game_developer'>Developer:</label>
+    <input type='text' name='create_game_developer' id='create_game_developer' min='0' />
+
+    <input type='submit' />
+</form>
+
+{{! UPDATE Game form }}
+<h2>Update a Game</h2>
+
+<form class="cuForm" id="update_game_form">
+    <!-- Select which game to update -->
+    <label for="update_game_id">Game to Update:</label>
+    <select name="update_game_id" id="update_game_id" required>
+        <option value="" disabled selected>Select a Game</option>
+        {{#each games}}
+        <option value="{{this.game_id}}">
+            {{this.game_id}} - {{this.title}}
+        </option>
+        {{/each}}
+    </select>
+
+    <!-- Game Title -->
+    <label for="update_game_title">Title:</label>
+    <input type="text" name="update_game_title" id="update_game_title" placeholder="Enter game title" required />
+
+    <!-- Release Year -->
+    <label for="update_game_year">Release Year:</label>
+    <input type="number" name="update_game_year" id="update_game_year" min="1970" max="2099" placeholder="YYYY" />
+
+    <!-- Developer -->
+    <label for="update_game_developer">Developer:</label>
+    <input type="text" name="update_game_developer" id="update_game_developer" placeholder="Developer name" />
+
+    <!-- ESRB Rating -->
+    <label for="update_game_esrb">ESRB Rating:</label>
+    <select name="update_game_esrb" id="update_game_esrb">
+        <option value="NULL" disabled selected>Select a Rating</option>
+        <option value="NULL">&lt; None &gt;</option>
+        {{#each ESRB}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Update Game" />
+</form>

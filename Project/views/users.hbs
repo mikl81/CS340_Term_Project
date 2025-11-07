@@ -1,0 +1,63 @@
+<div class="pageDesc">
+    <h1>Users</h1>
+    <p>The users of Bits-N-Pixel</p>
+</div>
+
+{{! READ TABLE }}
+<table>
+    <thead>
+        <tr>
+            {{#each users.[0]}}
+            <th>{{@key}}</th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each users}}
+        <tr>
+            <td>{{this.userID}}</td>
+            <td>{{this.username}}</td>
+            <td>{{this.email}}</td>
+
+            {{! DELETE form }}
+            <form id="delete_user_form">
+                <input type="hidden" name="delete_user_id" value="{{this.userID}}" />
+                <td><button type="submit">Delete</button></td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE FORM }}
+<h2>Create a User</h2>
+<form class="cuForm" id="create_user_form">
+    <label for="create_user_username">Username:</label>
+    <input type="text" id="create_user_username" name="create_user_username" required />
+
+    <label for="create_user_email">Email:</label>
+    <input type="email" id="create_user_email" name="create_user_email" required />
+
+    <input type="submit" />
+</form>
+
+{{! UPDATE FORM }}
+<h2>Update a User</h2>
+<form class="cuForm" id="update_user_form">
+    <label for="update_user_id">User to Update:</label>
+    <select name="update_user_id" id="update_user_id" required>
+        <option value="" disabled selected>Select a User</option>
+        {{#each users}}
+        <option value="{{this.userID}}">{{this.userID}} - {{this.username}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update_user_username">Username:</label>
+    <input type="text" id="update_user_username" name="update_user_username" placeholder="Enter new username" />
+
+    <label for="update_user_email">Email:</label>
+    <input type="email" id="update_user_email" name="update_user_email" placeholder="Enter new email" />
+
+    <input type="submit" value="Update User" />
+</form>

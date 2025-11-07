@@ -1,0 +1,83 @@
+<div class="pageDesc">
+    <h1>Lists to Games</h1>
+    <p>The transaction between lists and games featured on them</p>
+</div>
+
+{{! READ TABLE }}
+<table>
+    <thead>
+        <tr>
+            {{#each liststogames.[0]}}
+            <th>{{@key}}</th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each liststogames}}
+        <tr>
+            <td>{{this.listsToGamesID}}</td>
+            <td>{{this.listID}}</td>
+            <td>{{this.gameID}}</td>
+
+            {{! DELETE form }}
+            <form id="delete_liststogames_form">
+                <input type="hidden" name="delete_liststogames_id" value="{{this.listsToGamesID}}" />
+                <td><button type="submit">Delete</button></td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE FORM }}
+<h2>Create a List-Game Link</h2>
+<form class="cuForm" id="create_liststogames_form">
+    <label for="create_liststogames_list">List:</label>
+    <select id="create_liststogames_list" name="create_liststogames_list" required>
+        <option value="" disabled selected>Select a List</option>
+        {{#each lists}}
+        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="create_liststogames_game">Game:</label>
+    <select id="create_liststogames_game" name="create_liststogames_game" required>
+        <option value="" disabled selected>Select a Game</option>
+        {{#each games}}
+        <option value="{{this.gameID}}">{{this.gameID}} - {{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" />
+</form>
+
+{{! UPDATE FORM }}
+<h2>Update List-Game Link</h2>
+<form class="cuForm" id="update_liststogames_form">
+    <label for="update_liststogames_id">Entry to Update:</label>
+    <select id="update_liststogames_id" name="update_liststogames_id" required>
+        <option value="" disabled selected>Select an Entry</option>
+        {{#each liststogames}}
+        <option value="{{this.listsToGamesID}}">{{this.listsToGamesID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update_liststogames_list">List:</label>
+    <select id="update_liststogames_list" name="update_liststogames_list">
+        <option value="" disabled selected>Select a List</option>
+        {{#each lists}}
+        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="update_liststogames_game">Game:</label>
+    <select id="update_liststogames_game" name="update_liststogames_game">
+        <option value="" disabled selected>Select a Game</option>
+        {{#each games}}
+        <option value="{{this.gameID}}">{{this.gameID}} - {{this.title}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit" value="Update Entry" />
+</form>
