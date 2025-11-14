@@ -1,36 +1,46 @@
-*{
+* {
     margin: 0;
-    padding:0;
+    padding: 0;
     list-style: none;
 }
 
-img{
+img {
     width: 10em;
 }
 
-ol{
+ol {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: .5em 1em;
 }
 
-ol:left{
+
+nav a:link, nav a:visited {
+    background-color: gray;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid black;
 }
 
-ol:right{
-
+nav a:active, nav a:hover{
+    background-color: white;
+    color: gray;
 }
 
-#logo{
+
+#logo {
     text-align: center;
 }
 
-.pageDesc{
+.pageDesc {
     text-align: center;
 }
 
-.title{
+.title {
     text-align: center;
     background-color: gray;
     padding: 2em;
