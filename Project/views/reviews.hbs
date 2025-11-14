@@ -21,61 +21,7 @@
             <td>{{this.Game}}</td>
             <td>{{this.Review}}</td>
             <td>{{this.Rating}}</td>
-
-            {{! DELETE form }}
-            <form id="delete_review_form">
-                <input type="hidden" name="delete_review_id" value="{{this.reviewID}}" />
-                <td><button type="submit">Delete</button></td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
-
-{{! CREATE FORM }}
-<h2>Create a Review</h2>
-<form class="cuForm" id="create_review_form">
-    <label for="create_review_user">User:</label>
-    <select id="create_review_user" name="create_review_user" required>
-        <option value="" disabled selected>Select a User</option>
-        {{#each users}}
-        <option value="{{this.userID}}">{{this.userID}} - {{this.username}}</option>
-        {{/each}}
-    </select>
-
-    <label for="create_review_game">Game:</label>
-    <select id="create_review_game" name="create_review_game" required>
-        <option value="" disabled selected>Select a Game</option>
-        {{#each games}}
-        <option value="{{this.gameID}}">{{this.gameID}} - {{this.title}}</option>
-        {{/each}}
-    </select>
-
-    <label for="create_review_text">Review:</label>
-    <textarea id="create_review_text" name="create_review_text" rows="3" required></textarea>
-
-    <label for="create_review_rating">Rating (1-100):</label>
-    <input type="number" id="create_review_rating" name="create_review_rating" min="1" max="100" required />
-
-    <input type="submit" />
-</form>
-
-{{! UPDATE FORM }}
-<h2>Update a Review</h2>
-<form class="cuForm" id="update_review_form">
-    <label for="update_review_id">Review to Update:</label>
-    <select id="update_review_id" name="update_review_id" required>
-        <option value="" disabled selected>Select a Review</option>
-        {{#each reviews}}
-        <option value="{{this.reviewID}}">{{this.reviewID}}</option>
-        {{/each}}
-    </select>
-
-    <label for="update_review_text">Review Text:</label>
-    <textarea id="update_review_text" name="update_review_text" rows="3" placeholder="Edit review"></textarea>
-
-    <label for="update_review_rating">Rating (1-100):</label>
-    <input type="number" id="update_review_rating" name="update_review_rating" min="1" max="100" />
-
-    <input type="submit" value="Update Review" />
-</form>
