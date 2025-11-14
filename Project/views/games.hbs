@@ -16,11 +16,11 @@
     <tbody>
         {{#each games}}
         <tr>
-            <td>{{this.id}}</td>
+            <td>{{this.gameID}}</td>
             <td>{{this.title}}</td>
-            <td>{{this.releaseYear}}</td>
-            <td>{{this.ESRB}}</td>
             <td>{{this.developer}}</td>
+            <td>{{this.ESRB}}</td>
+            <td>{{this.releaseYear}}</td>
             {{! DELETE form }}
             <form id='delete_game_form'>
                 <input type='hidden' name='delete_game_id' value='{{this.id}}' />
