@@ -16,9 +16,10 @@
     <tbody>
         {{#each liststogames}}
         <tr>
-            <td>{{this.listsToGamesID}}</td>
-            <td>{{this.listID}}</td>
-            <td>{{this.gameID}}</td>
+            <td>{{this.gamesListID}}</td>
+            <td>{{this.List}}</td>
+            <td>{{this.User}}</td>
+            <td>{{this.Game}}</td>
 
             {{! DELETE form }}
             <form id="delete_liststogames_form">
@@ -45,7 +46,7 @@
     <select id="create_liststogames_game" name="create_liststogames_game" required>
         <option value="" disabled selected>Select a Game</option>
         {{#each games}}
-        <option value="{{this.gameID}}">{{this.gameID}} - {{this.title}}</option>
+        <option value="{{this.gameID}}">{{this.gameID}} - {{this.Game}}</option>
         {{/each}}
     </select>
 
@@ -59,7 +60,7 @@
     <select id="update_liststogames_id" name="update_liststogames_id" required>
         <option value="" disabled selected>Select an Entry</option>
         {{#each liststogames}}
-        <option value="{{this.listsToGamesID}}">{{this.listsToGamesID}}</option>
+        <option value="{{this.gamesListID}}">{{this.gamesListID}}</option>
         {{/each}}
     </select>
 
@@ -75,7 +76,7 @@
     <select id="update_liststogames_game" name="update_liststogames_game">
         <option value="" disabled selected>Select a Game</option>
         {{#each games}}
-        <option value="{{this.gameID}}">{{this.gameID}} - {{this.title}}</option>
+        <option value="{{this.gameID}}">{{this.gameID}} - {{this.Game}}</option>
         {{/each}}
     </select>
 
