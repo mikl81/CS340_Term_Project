@@ -13,6 +13,9 @@ DROP PROCEDURE IF EXISTS sp_load_game_reviewdb;
 DELIMITER //
 CREATE PROCEDURE sp_load_game_reviewdb()
 BEGIN
+    -- Create GameReviewsDB database
+    CREATE DATABASE IF NOT EXISTS GameReviewsDB;
+    USE GameReviewsDB;
 
     SET FOREIGN_KEY_CHECKS=0;
     SET AUTOCOMMIT=0;
