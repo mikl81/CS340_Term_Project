@@ -4,6 +4,80 @@
     SETUP
 */
 
+//Sample Data
+const games = [
+    {
+        gameID: 1,
+        Game: 'Dark Souls 3',
+        ReleaseYear: 2016,
+        ESRB: 'Mature 17+',
+        Developer: 'FromSoftware, Inc.'
+    },
+    {
+        gameID: 2,
+        Game: 'Hollow Knight',
+        ReleaseYear: 2017,
+        ESRB: 'Everyone 10+',
+        Developer: 'Team Cherry'
+    },
+    {
+        gameID: 3,
+        Game: 'SILENT HILL 2',
+        ReleaseYear: 2024,
+        ESRB: 'Mature 17+',
+        Developer: 'Bloober Team, SA'
+    }
+];
+
+
+const ESRB = [
+    { id: 1, name: 'E (Everyone)' },
+    { id: 2, name: 'T (Teen)' },
+    { id: 3, name: 'M (Mature 17+)' },
+    { id: 4, name: 'AO (Adults Only 18+)' }
+];
+
+const users = [
+    { userID: 1, Username: 'GreiratTheThief', Email: 'rooftopsleeper@gmail.com' },
+    { userID: 2, Username: 'Eygonnawin', Email: 'eygonofcarim@gmail.com' },
+    { userID: 3, Username: 'Tom', Email: 'tom123@hotmail.com' }
+];
+
+const lists = [
+    { listID: 1, userID: 2, listName: 'Must Plays', isPublic: 1 },
+    { listID: 2, userID: 3, listName: 'Top RPGs', isPublic: 1 },
+    { listID: 3, userID: 1, listName: 'Buggiest Games', isPublic: 0 }
+];
+
+const liststogames = [
+    { gamesListID: 1, List: "Top RPGs", User: "Tom", Game: "Dark Souls 3" },
+    { gamesListID: 2, List: "Must Plays", User: "Eygonnawin", Game: "SILENT HILL 2" }
+];
+
+const reviews = [
+    {
+        reviewID: 1,
+        User: "GreiratTheThief",
+        Game: "Dark Souls 3",
+        Review: 'This is the best game ever!',
+        Rating: 100
+    },
+    {
+        reviewID: 3,
+        User: "Eygonnawin",
+        Game: "SILENT HILL 2",
+        Review: 'Not even scary.',
+        Rating: 88
+    },
+    {
+        reviewID: 2,
+        User: "Tom",
+        Game: "Hollow Knight",
+        Review: 'I cannot believe they shipped this game with all these bugs.',
+        Rating: 23
+    }
+];
+
 // Express
 const express = require('express');  // We are using the express library for the web server
 const app = express(); // We need to instantiate an express object to interact with the server in our code
@@ -39,37 +113,6 @@ app.get('/', async function (req, res) {
 // GAMES
 app.get('/games', async function (req, res) {
     try {
-        const games = [
-            {
-                gameID: 1,
-                title: 'Dark Souls 3',
-                releaseYear: 2016,
-                ESRB: 'Mature 17+',
-                developer: 'FromSoftware, Inc.'
-            },
-            {
-                gameID: 2,
-                title: 'Hollow Knight',
-                releaseYear: 2017,
-                ESRB: 'Everyone 10+',
-                developer: 'Team Cherry'
-            },
-            {
-                gameID: 3,
-                title: 'SILENT HILL 2',
-                releaseYear: 2024,
-                ESRB: 'Mature 17+',
-                developer: 'Bloober Team, SA'
-            }
-        ];
-
-        const ESRB = [
-            { id: 1, name: 'E (Everyone)' },
-            { id: 2, name: 'T (Teen)' },
-            { id: 3, name: 'M (Mature 17+)' },
-            { id: 4, name: 'AO (Adults Only 18+)' }
-        ];
-
         res.render('games', { games, ESRB });
     } catch (error) {
         console.error('Error rendering /games page:', error);
@@ -80,11 +123,6 @@ app.get('/games', async function (req, res) {
 // USERS
 app.get('/users', async function (req, res) {
     try {
-        const users = [
-            { userID: 1, username: 'Greirat', email: 'rooftopsleeper@gmail.com' },
-            { userID: 2, username: 'Eygonnawin', email: 'eygonofcarim@gmail.com' },
-            { userID: 3, username: 'Tom', email: 'tom123@hotmail.com' }
-        ];
         res.render('users', { users });
     } catch (error) {
         console.error('Error rendering /users page:', error);
@@ -95,18 +133,6 @@ app.get('/users', async function (req, res) {
 // LISTS
 app.get('/lists', async function (req, res) {
     try {
-        const lists = [
-            { listID: 1, userID: 2, listName: 'Must Plays', isPublic: true },
-            { listID: 2, userID: 3, listName: 'Top RPGs', isPublic: true },
-            { listID: 3, userID: 1, listName: 'Buggiest Games', isPublic: false }
-        ];
-
-        const users = [
-            { userID: 1, username: 'Greirat' },
-            { userID: 2, username: 'Eygonnawin' },
-            { userID: 3, username: 'Tom' }
-        ];
-
         res.render('lists', { lists, users });
     } catch (error) {
         console.error('Error rendering /lists page:', error);
@@ -117,24 +143,6 @@ app.get('/lists', async function (req, res) {
 // LISTS TO GAMES
 app.get('/liststogames', async function (req, res) {
     try {
-        const liststogames = [
-            { gamesListID: 1, listID: 2, gameID: 1 },
-            { gamesListID: 2, listID: 1, gameID: 3 },
-            { gamesListID: 3, listID: 3, gameID: 2 }
-        ];
-
-        const lists = [
-            { listID: 1, listName: 'Must Plays' },
-            { listID: 2, listName: 'Top RPGs' },
-            { listID: 3, listName: 'Buggiest Games' }
-        ];
-
-        const games = [
-            { gameID: 1, title: 'Dark Souls 3' },
-            { gameID: 2, title: 'Hollow Knight' },
-            { gameID: 3, title: 'SILENT HILL 2' }
-        ];
-
         res.render('liststogames', { liststogames, lists, games });
     } catch (error) {
         console.error('Error rendering /liststogames page:', error);
@@ -145,42 +153,6 @@ app.get('/liststogames', async function (req, res) {
 // REVIEWS
 app.get('/reviews', async function (req, res) {
     try {
-        const reviews = [
-            {
-                reviewID: 1,
-                userID: 1,
-                gameID: 1,
-                review: 'This is the best game ever!',
-                rating: 100
-            },
-            {
-                reviewID: 2,
-                userID: 3,
-                gameID: 2,
-                review: 'I cannot believe they shipped this game with all these bugs.',
-                rating: 23
-            },
-            {
-                reviewID: 3,
-                userID: 2,
-                gameID: 3,
-                review: 'Not even scary.',
-                rating: 88
-            }
-        ];
-
-        const users = [
-            { userID: 1, username: 'Greirat' },
-            { userID: 2, username: 'Eygonnawin' },
-            { userID: 3, username: 'Tom' }
-        ];
-
-        const games = [
-            { gameID: 1, title: 'Dark Souls 3' },
-            { gameID: 2, title: 'Hollow Knight' },
-            { gameID: 3, title: 'SILENT HILL 2' }
-        ];
-
         res.render('reviews', { reviews, users, games });
     } catch (error) {
         console.error('Error rendering /reviews page:', error);

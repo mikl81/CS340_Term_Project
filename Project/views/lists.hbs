@@ -19,59 +19,7 @@
             <td>{{this.userID}}</td>
             <td>{{this.listName}}</td>
             <td>{{this.isPublic}}</td>
-
-            {{! DELETE form }}
-            <form id="delete_list_form">
-                <input type="hidden" name="delete_list_id" value="{{this.listID}}" />
-                <td><button type="submit">Delete</button></td>
-            </form>
         </tr>
         {{/each}}
     </tbody>
 </table>
-
-{{! CREATE FORM }}
-<h2>Create a List</h2>
-<form class="cuForm" id="create_list_form">
-    <label for="create_list_user">User:</label>
-    <select name="create_list_user" id="create_list_user" required>
-        <option value="" disabled selected>Select a User</option>
-        {{#each users}}
-        <option value="{{this.userID}}">{{this.userID}} - {{this.username}}</option>
-        {{/each}}
-    </select>
-
-    <label for="create_list_name">List Name:</label>
-    <input type="text" id="create_list_name" name="create_list_name" required />
-
-    <label for="create_list_isPublic">Public:</label>
-    <select id="create_list_isPublic" name="create_list_isPublic">
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-    </select>
-
-    <input type="submit" />
-</form>
-
-{{! UPDATE FORM }}
-<h2>Update a List</h2>
-<form class="cuForm" id="update_list_form">
-    <label for="update_list_id">List to Update:</label>
-    <select name="update_list_id" id="update_list_id" required>
-        <option value="" disabled selected>Select a List</option>
-        {{#each lists}}
-        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
-        {{/each}}
-    </select>
-
-    <label for="update_list_name">List Name:</label>
-    <input type="text" id="update_list_name" name="update_list_name" placeholder="Enter new name" />
-
-    <label for="update_list_isPublic">Public:</label>
-    <select id="update_list_isPublic" name="update_list_isPublic">
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-    </select>
-
-    <input type="submit" value="Update List" />
-</form>
