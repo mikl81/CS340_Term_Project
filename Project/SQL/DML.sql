@@ -32,7 +32,11 @@ ORDER BY
 -- Users Queries
 =================================================
 -- Get all users for the Users page.
-SELECT * FROM Users;
+SELECT 
+    Users.userID,
+    Users.username as Username,
+    Users.email as Email
+ FROM Users;
 
 =================================================
 -- Reviews Queries
