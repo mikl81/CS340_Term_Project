@@ -57,7 +57,13 @@ ORDER BY Reviews.rating DESC;
 -- Lists Queries
 =================================================
 -- Get all lists for the Lists page.
-SELECT * FROM Lists;
+SELECT
+    Lists.listID,
+    Users.username as User,
+    Lists.listName as Name,
+    Lists.isPublic as Public 
+FROM Lists
+INNER JOIN Users ON Lists.userID = Users.userID;
 
 -- Get all List IDs and names for List dropdown.
 SELECT 

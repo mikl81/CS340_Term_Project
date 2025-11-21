@@ -32,7 +32,13 @@ INNER JOIN Reviews ON Users.userID = Reviews.userID
 INNER JOIN Games ON Reviews.gameID = Games.gameID
 ORDER BY Reviews.rating DESC;`
 
-const select_lists = `SELECT * FROM Lists;`
+const select_lists = `SELECT
+    Lists.listID,
+    Users.username as User,
+    Lists.listName as Name,
+    Lists.isPublic as Public 
+FROM Lists
+INNER JOIN Users ON Lists.userID = Users.userID;`
 
 const select_lists_to_games = `SELECT
     ListsToGames.gamesListID,
@@ -154,6 +160,9 @@ app.get('/lists', async function (req, res) {
 // LISTS TO GAMES
 app.get('/liststogames', async function (req, res) {
   try {
+    const [liststogames] = await db.query(select_lists_to_games)
+    const [lists] = await db.query(select_lists)
+    const [games] = await db.query(select_games)
     res.render('liststogames', { liststogames, lists, games })
   } catch (error) {
     console.error('Error rendering /liststogames page:', error)
