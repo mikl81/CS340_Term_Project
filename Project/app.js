@@ -147,11 +147,13 @@ app.get('/liststogames', async function (req, res) {
 app.post('/liststogames/delete', async function (req, res) {
     try{
         let data = req.body;
-
-        const query1 = `CALL sp_Delete`
+        const query1 = `CALL sp_delete_ltg(?)`
+        await db.query(query1, [data.delete_ltg_id])
+        console.log(`DELETE liststogames. ID: ${data.delete_ltg_id}`)
+        res.redirect('/liststogames')
     } catch (error) {
     console.error('Error rendering page:', error);
-    res.status(500).send('An error occurred while reseting DB.');
+    res.status(500).send('An error occurred while deleting row');
   } 
 })
 
