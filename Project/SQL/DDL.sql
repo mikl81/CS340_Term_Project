@@ -3,10 +3,12 @@
 -- Group 84
 
 -- Citation for the following code:
--- Date: 11/13/2025
--- Created by Michael Fitzgibbon and Jonathan Ektefaie
--- Based on instructions provided in explorations from OSU course CS340 - Introduction To Databases.
--- If AI tools were used: No AI was used in the creation of this file.
+-- Date: 
+-- Copied from /OR/ Adapted from /OR/ Based on 
+-- (Explain degree of originality)
+-- Source URL: 
+-- If AI tools were used:
+-- (Explain the use of tools and include a summary of the prompts submitted to the AI tool)
 
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT=0;
