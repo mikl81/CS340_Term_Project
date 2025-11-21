@@ -175,11 +175,11 @@ BEGIN
     START TRANSACTION;
         DELETE FROM Users WHERE userID = u_id;
         
-        IF ROWCOUNT() = 0 THEN
+        IF ROW_COUNT() = 0 THEN
             SET ERROR_MESSAGE = CONCAT('No user found with userID: ', u_id);
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ERROR_MESSAGE;
         END IF;
     COMMIT;
-    
+
 END //
 DELIMITER ;
