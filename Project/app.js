@@ -52,46 +52,6 @@ JOIN Games ON ListsToGames.gameID = Games.gameID
 WHERE Lists.isPublic = TRUE
 ORDER BY Users.username;`
 
-const lists = [
-  { listID: 1, userID: 2, listName: 'Must Plays', isPublic: 1 },
-  { listID: 2, userID: 3, listName: 'Top RPGs', isPublic: 1 },
-  { listID: 3, userID: 1, listName: 'Buggiest Games', isPublic: 0 }
-]
-
-const liststogames = [
-  { gamesListID: 1, List: 'Top RPGs', User: 'Tom', Game: 'Dark Souls 3' },
-  {
-    gamesListID: 2,
-    List: 'Must Plays',
-    User: 'Eygonnawin',
-    Game: 'SILENT HILL 2'
-  }
-]
-
-const reviews = [
-  {
-    reviewID: 1,
-    User: 'GreiratTheThief',
-    Game: 'Dark Souls 3',
-    Review: 'This is the best game ever!',
-    Rating: 100
-  },
-  {
-    reviewID: 3,
-    User: 'Eygonnawin',
-    Game: 'SILENT HILL 2',
-    Review: 'Not even scary.',
-    Rating: 88
-  },
-  {
-    reviewID: 2,
-    User: 'Tom',
-    Game: 'Hollow Knight',
-    Review: 'I cannot believe they shipped this game with all these bugs.',
-    Rating: 23
-  }
-]
-
 // Express
 const express = require('express') // We are using the express library for the web server
 const app = express() // We need to instantiate an express object to interact with the server in our code
@@ -121,6 +81,18 @@ app.get('/', async function (req, res) {
   } catch (error) {
     console.error('Error rendering page:', error)
     res.status(500).send('An error occurred while rendering the page.')
+  }
+})
+
+app.post('/reset_db', async function (req, res) {
+  try {
+    let data = req.body;
+    const query1 = `CALL sp_load_game_reviewdb()`
+    await db.query(query1);
+    console.log("DB reset correctly!");
+  } catch (error) {
+    console.error('Error rendering page:', error);
+    res.status(500).send('An error occurred while reseting DB.');
   }
 })
 
@@ -171,6 +143,39 @@ app.get('/liststogames', async function (req, res) {
       .send('An error occurred while rendering the liststogames page.')
   }
 })
+
+app.post('/liststogames/delete', async function (req, res) {
+    try{
+        let data = req.body;
+
+        const query1 = `CALL sp_Delete`
+    } catch (error) {
+    console.error('Error rendering page:', error);
+    res.status(500).send('An error occurred while reseting DB.');
+  } 
+})
+
+// //CREATE LISTS TO GAMES - WIP
+// app.post('/liststogames/create'), async function (req, res){
+//     try{
+//         //Parse frontend form
+//         let data = req.body;
+
+//         //Clean data
+
+//         //Create and execute queries
+
+//         //Store ID of last inserted row
+
+//         //Redirect the users to the updated webpage
+//     } catch (error){
+//                 console.error('Error executing queries:', error);
+//         // Send a generic error message to the browser
+//         res.status(500).send(
+//             'An error occurred while executing the database queries.'
+//         );
+//     }
+// }
 
 // REVIEWS
 app.get('/reviews', async function (req, res) {
