@@ -14,11 +14,8 @@ ol {
     justify-content: space-between;
     padding: .5em 1em;
 }
-button{
-    cursor: pointer;
-}
 
-nav a:link, nav a:visited {
+a:link, a:visited {
     background-color: gray;
     color: white;
     padding: 14px 25px;
@@ -28,7 +25,7 @@ nav a:link, nav a:visited {
     border: 1px solid black;
 }
 
-nav a:active, nav a:hover{
+a:active, a:hover{
     background-color: white;
     color: gray;
 }

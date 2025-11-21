@@ -22,8 +22,8 @@
             <td>{{this.Game}}</td>
 
             {{! DELETE form }}
-            <form id="delete_liststogames_form">
-                <input type="hidden" name="delete_liststogames_id" value="{{this.listsToGamesID}}" />
+            <form id="delete_ltg_form" method="POST" action="/liststogames/delete">
+                <input type="hidden" name="delete_ltg_id" value="{{this.gamesListID}}" />
                 <td><button type="submit">Delete</button></td>
             </form>
         </tr>
