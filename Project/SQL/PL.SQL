@@ -158,11 +158,11 @@ END //
 DELIMITER ;
 
 =================================================
--- Delete User Stored Procedure
+-- Delete ListToGames Stored Procedure
 =================================================
-DROP PROCEDURE IF EXISTS sp_delete_user;
+DROP PROCEDURE IF EXISTS sp_delete_ltg;
 DELIMITER //
-CREATE PROCEDURE sp_delete_user(IN u_id INT)
+CREATE PROCEDURE sp_delete_ltg(IN gl_id INT)
 BEGIN
     DECLARE ERROR_MESSAGE VARCHAR(255);
 
@@ -173,10 +173,10 @@ BEGIN
     END;
 
     START TRANSACTION;
-        DELETE FROM Users WHERE userID = u_id;
+        DELETE FROM ListToGames WHERE gamesListID = gl_id;
         
         IF ROW_COUNT() = 0 THEN
-            SET ERROR_MESSAGE = CONCAT('No user found with userID: ', u_id);
+            SET ERROR_MESSAGE = CONCAT('No gamesList found with gamesListID: ', gl_id);
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ERROR_MESSAGE;
         END IF;
     COMMIT;
