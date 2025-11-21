@@ -13,146 +13,112 @@ DROP PROCEDURE IF EXISTS sp_load_game_reviewdb;
 DELIMITER //
 CREATE PROCEDURE sp_load_game_reviewdb()
 BEGIN
-    -- Create GameReviewsDB database
-    CREATE DATABASE IF NOT EXISTS GameReviewsDB;
-    USE GameReviewsDB;
+    SET FOREIGN_KEY_CHECKS = 0;
 
-    SET FOREIGN_KEY_CHECKS=0;
-    SET AUTOCOMMIT=0;
+    DROP TABLE IF EXISTS ListsToGames;
+    DROP TABLE IF EXISTS Lists;
+    DROP TABLE IF EXISTS Reviews;
+    DROP TABLE IF EXISTS Users;
+    DROP TABLE IF EXISTS Games;
 
-    =================================================
-    -- Table `Games`
-    =================================================
-    DROP TABLE IF EXISTS `Games`;
+    SET FOREIGN_KEY_CHECKS = 1;
 
-    CREATE TABLE IF NOT EXISTS `Games` (
-    `gameID` INT AUTO_INCREMENT NOT NULL,
-    `title` VARCHAR(100) NOT NULL,
-    `releaseYear` INT NOT NULL,
-    `ESRB` VARCHAR(100) NOT NULL,
-    `developer` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`gameID`)
-    UNIQUE INDEX `gameID_UNIQUE` (`gameID` ASC) VISIBLE
-    ) ENGINE=InnoDB;
+    -- Games
+    CREATE TABLE Games (
+        gameID INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(100) NOT NULL,
+        releaseYear INT NOT NULL,
+        ESRB VARCHAR(100) NOT NULL,
+        developer VARCHAR(100) NOT NULL
+    );
 
-    -- Insert Sample Data into Games
-    INSERT INTO Games (title, releaseYear, ESRB, developer)
-    VALUES
+    INSERT INTO Games (title, releaseYear, ESRB, developer) VALUES
         ('Dark Souls 3', 2016, 'Mature 17+', 'FromSoftware, Inc.'),
         ('Hollow Knight', 2017, 'Everyone 10+', 'Team Cherry'),
         ('SILENT HILL 2', 2024, 'Mature 17+', 'Bloober Team, SA');
 
-    =================================================
-    -- Create Table for Users
-    =================================================
-    DROP TABLE IF EXISTS `Users`;
+    -- Users
+    CREATE TABLE Users (
+        userID INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(20) NOT NULL,
+        email VARCHAR(254) NOT NULL
+    );
 
-    CREATE TABLE IF NOT EXISTS `Users` (
-    `userID` INT AUTO_INCREMENT NOT NULL,
-    `username` VARCHAR(20) NOT NULL,
-    `email` VARCHAR(254) NOT NULL,
-    PRIMARY KEY (`userID`)
-    UNIQUE INDEX `userID_UNIQUE` (`userID` ASC) VISIBLE
-    ) ENGINE=InnoDB;
-
-    -- Insert Sample Data into Users
-    INSERT INTO Users (username, email)
-    VALUES
+    INSERT INTO Users (username, email) VALUES
         ('GreiratTheThief', 'rooftopsleeper@gmail.com'),
         ('Eygonnawin', 'eygonofcarim@gmail.com'),
         ('Tom', 'tom123@hotmail.com');
 
-    =================================================
-    -- Create Table for Reviews
-    =================================================
-    DROP TABLE IF EXISTS `Reviews`;
+    -- Reviews
+    CREATE TABLE Reviews (
+        reviewID INT AUTO_INCREMENT PRIMARY KEY,
+        userID INT NOT NULL,
+        gameID INT NOT NULL,
+        review TEXT,
+        rating INT NOT NULL,
+        CONSTRAINT fk_reviews_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE,
+        CONSTRAINT fk_reviews_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE,
+        CHECK (rating >= 1 AND rating <= 100)
+    );
 
-    CREATE TABLE IF NOT EXISTS `Reviews` (
-    `reviewID` INT AUTO_INCREMENT NOT NULL,
-    `userID` INT NOT NULL,
-    `gameID` INT NOT NULL,
-    `review` TEXT,
-    `rating` INT NOT NULL,
-    PRIMARY KEY (`reviewID`),
-    UNIQUE INDEX `reviewID_UNIQUE` (`reviewID` ASC) VISIBLE,
-    CONSTRAINT `fk_userID`
-        FOREIGN KEY (`userID`)
-        REFERENCES `Users` (`userID`)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION,
-    CONSTRAINT `fk_gameID`
-        FOREIGN KEY (`gameID`)
-        REFERENCES `Games` (`gameID`)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION,
-    CONSTRAINT `review_limit` CHECK (`rating` >= 1 AND `rating` <= 100)
-    ) ENGINE=InnoDB;
-
-    -- Insert Sample Data into Reviews
-    INSERT INTO Reviews (userID, gameID, review, rating)
-    VALUES
+    INSERT INTO Reviews (userID, gameID, review, rating) VALUES
         (1, 1, 'This is the best game ever!', 100),
         (3, 2, 'I cannot believe they shipped this game with all these bugs.', 23),
         (2, 3, 'Not even scary.', 88);
 
-    =================================================
-    -- Create Table for Lists
-    =================================================
-    DROP TABLE IF EXISTS `Lists`;
+    -- Lists
+    CREATE TABLE Lists (
+        listID INT AUTO_INCREMENT PRIMARY KEY,
+        userID INT NOT NULL,
+        listName VARCHAR(250) NOT NULL,
+        isPublic BOOLEAN NOT NULL,
+        CONSTRAINT fk_lists_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE
+    );
 
-    CREATE TABLE IF NOT EXISTS `Lists` (
-    `listID` INT AUTO_INCREMENT NOT NULL,
-    `userID` INT NOT NULL,
-    `listName` VARCHAR(250) NOT NULL,
-    `isPublic` BOOLEAN NOT NULL,
-    PRIMARY KEY (`listID`),
-    UNIQUE INDEX `listID_UNIQUE` (`listID` ASC) VISIBLE,
-    CONSTRAINT `fk_userID`
-        FOREIGN KEY (`userID`)
-        REFERENCES `Users` (`userID`)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION
-    ) ENGINE=InnoDB;
-
-    -- Insert Sample Data into Lists
-    INSERT INTO Lists (userID, listName, isPublic)
-    VALUES
+    INSERT INTO Lists (userID, listName, isPublic) VALUES
         (2, 'Must Plays', TRUE),
         (3, 'Top RPGs', TRUE),
         (1, 'Buggiest Games', FALSE);
 
-    =================================================
-    -- Create Table for Lists to Games relationship
-    =================================================
-    DROP TABLE IF EXISTS `ListsToGames`;
+    -- ListsToGames
+    CREATE TABLE ListsToGames (
+        gamesListID INT AUTO_INCREMENT PRIMARY KEY,
+        listID INT NOT NULL,
+        gameID INT NOT NULL,
+        CONSTRAINT fk_ltg_list FOREIGN KEY (listID) REFERENCES Lists(listID) ON DELETE CASCADE,
+        CONSTRAINT fk_ltg_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE
+    );
 
-    CREATE TABLE IF NOT EXISTS `ListsToGames` (
-    `gamesListID` INT AUTO_INCREMENT NOT NULL,
-    `listID` INT NOT NULL,
-    `gameID` INT NOT NULL,
-    PRIMARY KEY (`gamesListID`),
-    UNIQUE INDEX `gamesListID_UNIQUE` (`gamesListID` ASC) VISIBLE,
-    CONSTRAINT `fk_listID`
-        FOREIGN KEY (`listID`)
-        REFERENCES `Lists` (`listID`)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION,
-    CONSTRAINT `fk_gameID`
-        FOREIGN KEY (`gameID`)
-        REFERENCES `Games` (`gameID`)
-        ON DELETE CASCADE
-        ON UPDATE NO ACTION
-    ) ENGINE=InnoDB;
-
-    -- Insert Sample Data into ListsToGames
-    INSERT INTO ListsToGames (listID,gameID)
-    VALUES
+    INSERT INTO ListsToGames (listID, gameID) VALUES
         (2, 1),
         (1, 3),
         (3, 2);
-
-    SET FOREIGN_KEY_CHECKS=1;
-    COMMIT;
 END //
 
+DELIMITER ;
+
+-- Delete ListToGames Stored Procedure
+
+DROP PROCEDURE IF EXISTS sp_delete_ltg;
+DELIMITER //
+CREATE PROCEDURE sp_delete_ltg(IN gl_id INT)
+BEGIN
+    DECLARE ERROR_MESSAGE VARCHAR(255);
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM ListsToGames WHERE gamesListID = gl_id;
+        
+        IF ROW_COUNT() = 0 THEN
+            SET ERROR_MESSAGE = CONCAT('No gamesList found with gamesListID: ', gl_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = ERROR_MESSAGE;
+        END IF;
+    COMMIT;
+
+END //
 DELIMITER ;
