@@ -14,7 +14,9 @@ ol {
     justify-content: space-between;
     padding: .5em 1em;
 }
-
+button{
+    cursor: pointer;
+}
 
 nav a:link, nav a:visited {
     background-color: gray;
