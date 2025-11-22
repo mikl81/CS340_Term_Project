@@ -38,7 +38,7 @@
     <select id="create_liststogames_list" name="create_liststogames_list" required>
         <option value="" disabled selected>Select a List</option>
         {{#each lists}}
-        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        <option value="{{this.listID}}">{{this.listID}} - {{this.Name}}</option>
         {{/each}}
     </select>
 
@@ -68,7 +68,7 @@
     <select id="update_liststogames_list" name="update_liststogames_list">
         <option value="" disabled selected>Select a List</option>
         {{#each lists}}
-        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        <option value="{{this.listID}}">{{this.listID}} - {{this.Name}}</option>
         {{/each}}
     </select>
 

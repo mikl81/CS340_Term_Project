@@ -157,6 +157,16 @@ app.post('/liststogames/delete', async function (req, res) {
   } 
 })
 
+app.post('/liststogames/update', async function (req, res) {
+  try{
+    let data = req.body;
+    const query1 = `UPDATE sp_update_ltg(?,?)`
+    await db.query(query1, [data.update_ltg_id])
+  } catch (error){
+
+  }
+})
+
 // //CREATE LISTS TO GAMES - WIP
 // app.post('/liststogames/create'), async function (req, res){
 //     try{
