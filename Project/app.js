@@ -163,7 +163,8 @@ app.post('/liststogames/update', async function (req, res) {
     const query1 = `UPDATE sp_update_ltg(?,?)`
     await db.query(query1, [data.update_ltg_id])
   } catch (error){
-
+    console.error('Error rendering page:', error);
+    res.status(500).send('An error occurred while updating row');
   }
 })
 
