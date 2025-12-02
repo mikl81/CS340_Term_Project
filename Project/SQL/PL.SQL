@@ -122,3 +122,40 @@ BEGIN
 
 END //
 DELIMITER ;
+
+-- Create ListToGames Stored Procedure
+
+DROP PROCEDURE IF EXISTS sp_create_ltg;
+DELIMITER //
+CREATE PROCEDURE sp_create_ltg(
+    IN list_id INT, 
+    IN game_id INT,
+    OUT ltg_id INT)
+BEGIN
+    INSERT INTO ListsToGames (listID, gameID)
+    VALUES (list_id, game_id);
+
+    SELECT LAST_INSERT_ID() INTO ltg_id;
+    SELECT LAST_INSERT_ID() AS 'new_id';
+
+END //
+DELIMITER ;
+
+
+-- Update ListToGames Stored Procedure
+
+DROP PROCEDURE IF EXISTS sp_update_ltg;
+DELIMITER //
+CREATE PROCEDURE sp_update_ltg(
+    IN ltg_id INT,
+    IN list_id INT, 
+    IN game_id INT)
+
+BEGIN
+    UPDATE ListsToGames
+    SET listID = list_id,
+        gameID = game_id
+    WHERE id = ltg_id;
+
+END //
+DELIMITER ;
