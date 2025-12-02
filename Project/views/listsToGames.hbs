@@ -33,7 +33,7 @@
 
 {{! CREATE FORM }}
 <h2>Create a List-Game Link</h2>
-<form class="cuForm" id="create_liststogames_form">
+<form class="cuForm" id="create_liststogames_form" method="POST" action="/liststogames/create">
     <label for="create_liststogames_list">List:</label>
     <select id="create_liststogames_list" name="create_liststogames_list" required>
         <option value="" disabled selected>Select a List</option>
@@ -55,7 +55,7 @@
 
 {{! UPDATE FORM }}
 <h2>Update List-Game Link</h2>
-<form class="cuForm" id="update_liststogames_form">
+<form class="cuForm" id="update_liststogames_form" method="POST" action="/liststogames/update">
     <label for="update_liststogames_id">Entry to Update:</label>
     <select id="update_liststogames_id" name="update_liststogames_id" required>
         <option value="" disabled selected>Select an Entry</option>

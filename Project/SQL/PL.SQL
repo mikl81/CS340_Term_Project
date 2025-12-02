@@ -155,7 +155,7 @@ BEGIN
     UPDATE ListsToGames
     SET listID = list_id,
         gameID = game_id
-    WHERE id = ltg_id;
+    WHERE gamesListId = ltg_id;
 
 END //
 DELIMITER ;
