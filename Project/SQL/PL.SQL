@@ -9,6 +9,7 @@
 -- If AI tools were used: No AI was used in the creation of this file.
 
 -- Game Reviews Database
+-- Reset Database Stored Procedure
 DROP PROCEDURE IF EXISTS sp_load_game_reviewdb;
 DELIMITER //
 CREATE PROCEDURE sp_load_game_reviewdb()
