@@ -89,6 +89,7 @@ app.post('/reset_db', async function (req, res) {
     const query1 = `CALL sp_load_game_reviewdb()`
     await db.query(query1)
     console.log('DB reset correctly!')
+    res.redirect('/')
   } catch (error) {
     console.error('Error rendering page:', error)
     res.status(500).send('An error occurred while reseting DB.')

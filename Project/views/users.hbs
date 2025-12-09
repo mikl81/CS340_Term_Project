@@ -10,7 +10,6 @@
             {{#each users.[0]}}
             <th>{{@key}}</th>
             {{/each}}
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +18,7 @@
             <td>{{this.userID}}</td>
             <td>{{this.Username}}</td>
             <td>{{this.Email}}</td>
+        </tr>
         {{/each}}
     </tbody>
 </table>
