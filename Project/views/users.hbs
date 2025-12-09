@@ -1,3 +1,9 @@
+{{!-- 
+Citation for the following Handlebars HTML
+Date: 12/08/2025
+Adapted from CS340 starter code by Michael FitzPerry
+--}}
+
 <div class="pageDesc">
     <h1>Users</h1>
     <p>The users of Bits-N-Pixel</p>
@@ -10,7 +16,6 @@
             {{#each users.[0]}}
             <th>{{@key}}</th>
             {{/each}}
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +24,7 @@
             <td>{{this.userID}}</td>
             <td>{{this.Username}}</td>
             <td>{{this.Email}}</td>
+        </tr>
         {{/each}}
     </tbody>
 </table>

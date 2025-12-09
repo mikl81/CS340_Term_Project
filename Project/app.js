@@ -1,4 +1,6 @@
-//Code below has been tweaked from code samples provided in CS340 activity 2 and Web Application Exploration
+// Citation for the following JS
+// Date: 12/08/2025
+// Adapted from CS340 starter code by Michael FitzPerry
 
 /*
     SETUP
@@ -49,7 +51,6 @@ FROM ListsToGames
 JOIN Lists ON ListsToGames.listID = Lists.listID
 JOIN Users ON Lists.userID = Users.userID
 JOIN Games ON ListsToGames.gameID = Games.gameID
-WHERE Lists.isPublic = TRUE
 ORDER BY Users.username;`
 
 // Express
@@ -86,13 +87,14 @@ app.get('/', async function (req, res) {
 
 app.post('/reset_db', async function (req, res) {
   try {
-    let data = req.body;
+    let data = req.body
     const query1 = `CALL sp_load_game_reviewdb()`
-    await db.query(query1);
-    console.log("DB reset correctly!");
+    await db.query(query1)
+    console.log('DB reset correctly!')
+    res.redirect('/')
   } catch (error) {
-    console.error('Error rendering page:', error);
-    res.status(500).send('An error occurred while reseting DB.');
+    console.error('Error rendering page:', error)
+    res.status(500).send('An error occurred while reseting DB.')
   }
 })
 
@@ -145,39 +147,57 @@ app.get('/liststogames', async function (req, res) {
 })
 
 app.post('/liststogames/delete', async function (req, res) {
-    try{
-        let data = req.body;
-        const query1 = `CALL sp_delete_ltg(?)`
-        await db.query(query1, [data.delete_ltg_id])
-        console.log(`DELETE liststogames. ID: ${data.delete_ltg_id}`)
-        res.redirect('/liststogames')
-    } catch (error) {
-    console.error('Error rendering page:', error);
-    res.status(500).send('An error occurred while deleting row');
-  } 
+  try {
+    let data = req.body
+    const query1 = `CALL sp_delete_ltg(?)`
+    await db.query(query1, [data.delete_ltg_id])
+    console.log(`DELETE liststogames. ID: ${data.delete_ltg_id}`)
+    res.redirect('/liststogames')
+  } catch (error) {
+    console.error('Error rendering page:', error)
+    res.status(500).send('An error occurred while deleting row')
+  }
 })
 
-// //CREATE LISTS TO GAMES - WIP
-// app.post('/liststogames/create'), async function (req, res){
-//     try{
-//         //Parse frontend form
-//         let data = req.body;
+app.post('/liststogames/update', async function (req, res) {
+  try {
+    const data = req.body
+    const query1 = `CALL sp_update_ltg(?,?,?);`
+    await db.query(query1, [
+      data.update_liststogames_id,
+      data.update_liststogames_list,
+      data.update_liststogames_game
+    ])
+    res.redirect('/liststogames')
+  } catch (error) {
+    console.error('Error rendering page:', error)
+    res.status(500).send('An error occurred while updating row')
+  }
+})
 
-//         //Clean data
+//CREATE LISTS TO GAMES - WIP
+app.post('/liststogames/create', async function (req, res) {
+  try {
+    //Parse frontend form
+    let data = req.body
 
-//         //Create and execute queries
+    //Create and execute queries
+    const query1 = `CALL sp_create_ltg(?, ?, @new_id);`
 
-//         //Store ID of last inserted row
-
-//         //Redirect the users to the updated webpage
-//     } catch (error){
-//                 console.error('Error executing queries:', error);
-//         // Send a generic error message to the browser
-//         res.status(500).send(
-//             'An error occurred while executing the database queries.'
-//         );
-//     }
-// }
+    await db.query(query1, [
+      data.create_liststogames_list,
+      data.create_liststogames_game
+    ])
+    //Redirect the users to the updated webpage
+    res.redirect('/liststogames')
+  } catch (error) {
+    console.error('Error executing queries:', error)
+    // Send a generic error message to the browser
+    res
+      .status(500)
+      .send('An error occurred while executing the database queries.')
+  }
+})
 
 // REVIEWS
 app.get('/reviews', async function (req, res) {

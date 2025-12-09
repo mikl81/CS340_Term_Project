@@ -1,3 +1,9 @@
+{{!-- 
+Citation for the following Handlebars HTML
+Date: 12/08/2025
+Adapted from CS340 starter code by Michael FitzPerry
+--}}
+
 <div class="pageDesc">
     <h1>Lists to Games</h1>
     <p>The transaction between lists and games featured on them</p>
@@ -31,14 +37,15 @@
     </tbody>
 </table>
 
-{{! CREATE FORM }}
+<div class="container">
+    {{! CREATE FORM }}
+<form class="cuForm" id="create_liststogames_form" method="POST" action="/liststogames/create">
 <h2>Create a List-Game Link</h2>
-<form class="cuForm" id="create_liststogames_form">
     <label for="create_liststogames_list">List:</label>
     <select id="create_liststogames_list" name="create_liststogames_list" required>
         <option value="" disabled selected>Select a List</option>
         {{#each lists}}
-        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        <option value="{{this.listID}}">{{this.listID}} - {{this.Name}}</option>
         {{/each}}
     </select>
 
@@ -49,13 +56,13 @@
         <option value="{{this.gameID}}">{{this.gameID}} - {{this.Game}}</option>
         {{/each}}
     </select>
-
+<br>
     <input type="submit" />
 </form>
 
 {{! UPDATE FORM }}
+<form class="cuForm" id="update_liststogames_form" method="POST" action="/liststogames/update">
 <h2>Update List-Game Link</h2>
-<form class="cuForm" id="update_liststogames_form">
     <label for="update_liststogames_id">Entry to Update:</label>
     <select id="update_liststogames_id" name="update_liststogames_id" required>
         <option value="" disabled selected>Select an Entry</option>
@@ -68,7 +75,7 @@
     <select id="update_liststogames_list" name="update_liststogames_list">
         <option value="" disabled selected>Select a List</option>
         {{#each lists}}
-        <option value="{{this.listID}}">{{this.listID}} - {{this.listName}}</option>
+        <option value="{{this.listID}}">{{this.listID}} - {{this.Name}}</option>
         {{/each}}
     </select>
 
@@ -79,6 +86,9 @@
         <option value="{{this.gameID}}">{{this.gameID}} - {{this.Game}}</option>
         {{/each}}
     </select>
-
+<br>
     <input type="submit" value="Update Entry" />
 </form>
+</div>
+
+

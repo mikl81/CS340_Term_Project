@@ -11,7 +11,7 @@
 =================================================
 -- Games Queries
 =================================================
--- Get all games and their average ratings for the Games page.
+-- Get all games for the Games page.
 SELECT
     Games.gameID,
     Games.title as Game,
