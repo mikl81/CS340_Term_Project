@@ -49,7 +49,7 @@ label{
 }
 
 select{
-    width: 50%;
+    width: 100%;
     padding: 6px;
     box-sizing: border-box;
 }

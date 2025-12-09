@@ -1,4 +1,6 @@
-//Code below has been tweaked from code samples provided in CS340 activity 2 and Web Application Exploration
+// Citation for the following JS
+// Date: 12/08/2025
+// Adapted from CS340 starter code by Michael FitzPerry
 
 /*
     SETUP
