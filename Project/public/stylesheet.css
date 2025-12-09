@@ -1,7 +1,13 @@
+/* CSS designed by Michael FitzPerry */
+
 * {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+body{
+    background-color: #f6f7eb;
 }
 
 img {
@@ -15,29 +21,52 @@ ol {
     padding: .5em 1em;
 }
 
-a:link, a:visited {
-    background-color: gray;
-    color: white;
+a:link, a:visited, button, input[type=submit]{
+    transition: .5s;
+    background-color: #e94f37;
+    color: #f6f7eb;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid #393e41;
+    border-radius: 5%;
 }
 
-a:active, a:hover{
-    background-color: white;
-    color: gray;
+a:active, a:hover, button:active, button:hover, input[type=submit]:hover{
+    cursor: pointer;
+    background-color: #393e41;
 }
 
-table{
-    margin-top: 2em;
-    justify-self: center;
+label{
+    display: block;
+}
+
+#update_liststogames_form, #create_liststogames_form{
+    padding: 2.5% 5%;
+    background-color: #e0e0e0;
+    filter: drop-shadow(13px 7px 2px #8c8c87);
+}
+
+select{
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+table {
+    margin: 2em auto;
     border-collapse: collapse;
 }
 
 table, th, td{
-    border: 1px solid gray
+    border: 1px solid #393e41
+}
+
+th{
+    padding: 0 1em;
+    background-color: #e94f37;
+    color: #f6f7eb;
 }
 
 tbody tr:nth-child(even){
@@ -48,7 +77,10 @@ tbody td{
     padding: 0 .5em;
 }
 
-
+tbody button, input[type=submit]{
+    padding: 2px;
+    margin: 2px;
+}
 
 #logo {
     text-align: center;
@@ -60,6 +92,15 @@ tbody td{
 
 .title {
     text-align: center;
-    background-color: gray;
+    background-color: #e94f37;
     padding: 2em;
+    color: #f6f7eb;
+}
+
+.container{
+    margin-top: 2.5%;
+    padding-top: 2.5%;
+    display: flex;
+    justify-content: space-around;
+    border-top: solid #393e41;
 }
