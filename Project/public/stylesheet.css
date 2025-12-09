@@ -54,9 +54,8 @@ select{
     box-sizing: border-box;
 }
 
-table{
-    margin-top: 2em;
-    justify-self: center;
+table {
+    margin: 2em auto;
     border-collapse: collapse;
 }
 
