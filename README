@@ -1,10 +1,10 @@
 README
     This program was created by Michael Fitzgibbon Perry (AKA FitzPerry) and Jonathan Ektefaie during Fall 2025 for CS340.
     This project represents a theoretical backend driven website for a potential online review service, Bits-N-Pixels.
-    Our service is running on NodeJS with a MySQL database with a Handlebars Engine. Our website features navigation and display of each entity in the database, driven by select statments. We have implemented CRUD functionality for the M-M database, Lists-to-Games. All user input is sanitized from injection attacks by utilizing stored procedures found in our PL.SQL file.
+    Our service is running on NodeJS with a MySQL database with a Handlebars Engine. Our website features navigation and display of each entity in the database, driven by select statments. We have implemented CRUD functionality for the M-M database, ListsToGames. All user input is sanitized from injection attacks by utilizing stored procedures found in our PL.SQL file.
 
 CITATIONS
-    Citations can be found in-file with the adapated work. A brief overview of tools and code adapated from can be found below:
+    Citations can be found in-file with the adapted work. A brief overview of tools and code adapted from can be found below:
 
     ERD created by Jonathan Ektefaie in Draw.io, Schema Diagram generated in MYSQL Workbench by Michael Fitzgibbon
 
