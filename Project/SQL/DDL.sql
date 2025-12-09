@@ -23,7 +23,7 @@ BEGIN
     DROP TABLE IF EXISTS Games;
 
 
-    -- Games
+    -- Create Games Table and Insert Data
     CREATE TABLE Games (
         gameID INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(100) NOT NULL,
@@ -37,7 +37,7 @@ BEGIN
         ('Hollow Knight', 2017, 'Everyone 10+', 'Team Cherry'),
         ('SILENT HILL 2', 2024, 'Mature 17+', 'Bloober Team, SA');
 
-    -- Users
+    -- Create Users Table and Insert Data
     CREATE TABLE Users (
         userID INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(20) NOT NULL,
@@ -49,7 +49,8 @@ BEGIN
         ('Eygonnawin', 'eygonofcarim@gmail.com'),
         ('Tom', 'tom123@hotmail.com');
 
-    -- Reviews
+    -- Create Reviews Table and Insert Data
+    -- Uses ON DELETE CASCADE to remove reviews if associated user or game is deleted
     CREATE TABLE Reviews (
         reviewID INT AUTO_INCREMENT PRIMARY KEY,
         userID INT NOT NULL,
@@ -66,7 +67,8 @@ BEGIN
         (3, 2, 'I cannot believe they shipped this game with all these bugs.', 23),
         (2, 3, 'Not even scary.', 88);
 
-    -- Lists
+    -- Create Lists Table and Insert Data
+    -- Uses ON DELETE CASCADE to remove lists if associated user is deleted
     CREATE TABLE Lists (
         listID INT AUTO_INCREMENT PRIMARY KEY,
         userID INT NOT NULL,
@@ -80,7 +82,8 @@ BEGIN
         (3, 'Top RPGs', TRUE),
         (1, 'Buggiest Games', FALSE);
 
-    -- ListsToGames
+    -- Create ListsToGames Table and Insert Data
+    -- Uses ON DELETE CASCADE to remove entries if associated list or game is deleted
     CREATE TABLE ListsToGames (
         gamesListID INT AUTO_INCREMENT PRIMARY KEY,
         listID INT NOT NULL,
