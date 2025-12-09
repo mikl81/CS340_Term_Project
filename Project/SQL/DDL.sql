@@ -9,96 +9,89 @@
 -- If AI tools were used: No AI was used in the creation of this file.
 
 -- Game Reviews Database
-DROP PROCEDURE IF EXISTS sp_load_game_reviewdb;
-DELIMITER //
-CREATE PROCEDURE sp_load_game_reviewdb()
-BEGIN
-    SET FOREIGN_KEY_CHECKS = 0;
-    SET AUTOCOMMIT = 0;
+SET FOREIGN_KEY_CHECKS = 0;
+SET AUTOCOMMIT = 0;
 
-    DROP TABLE IF EXISTS ListsToGames;
-    DROP TABLE IF EXISTS Lists;
-    DROP TABLE IF EXISTS Reviews;
-    DROP TABLE IF EXISTS Users;
-    DROP TABLE IF EXISTS Games;
+DROP TABLE IF EXISTS ListsToGames;
+DROP TABLE IF EXISTS Lists;
+DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Games;
 
 
-    -- Create Games Table and Insert Data
-    CREATE TABLE Games (
-        gameID INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(100) NOT NULL,
-        releaseYear INT NOT NULL,
-        ESRB VARCHAR(100) NOT NULL,
-        developer VARCHAR(100) NOT NULL
-    );
+-- Create Games Table and Insert Data
+CREATE TABLE Games (
+    gameID INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    releaseYear INT NOT NULL,
+    ESRB VARCHAR(100) NOT NULL,
+    developer VARCHAR(100) NOT NULL
+);
 
-    INSERT INTO Games (title, releaseYear, ESRB, developer) VALUES
-        ('Dark Souls 3', 2016, 'Mature 17+', 'FromSoftware, Inc.'),
-        ('Hollow Knight', 2017, 'Everyone 10+', 'Team Cherry'),
-        ('SILENT HILL 2', 2024, 'Mature 17+', 'Bloober Team, SA');
+INSERT INTO Games (title, releaseYear, ESRB, developer) VALUES
+    ('Dark Souls 3', 2016, 'Mature 17+', 'FromSoftware, Inc.'),
+    ('Hollow Knight', 2017, 'Everyone 10+', 'Team Cherry'),
+    ('SILENT HILL 2', 2024, 'Mature 17+', 'Bloober Team, SA');
 
-    -- Create Users Table and Insert Data
-    CREATE TABLE Users (
-        userID INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(20) NOT NULL,
-        email VARCHAR(254) NOT NULL
-    );
+-- Create Users Table and Insert Data
+CREATE TABLE Users (
+    userID INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL,
+    email VARCHAR(254) NOT NULL
+);
 
-    INSERT INTO Users (username, email) VALUES
-        ('GreiratTheThief', 'rooftopsleeper@gmail.com'),
-        ('Eygonnawin', 'eygonofcarim@gmail.com'),
-        ('Tom', 'tom123@hotmail.com');
+INSERT INTO Users (username, email) VALUES
+    ('GreiratTheThief', 'rooftopsleeper@gmail.com'),
+    ('Eygonnawin', 'eygonofcarim@gmail.com'),
+    ('Tom', 'tom123@hotmail.com');
 
-    -- Create Reviews Table and Insert Data
-    -- Uses ON DELETE CASCADE to remove reviews if associated user or game is deleted
-    CREATE TABLE Reviews (
-        reviewID INT AUTO_INCREMENT PRIMARY KEY,
-        userID INT NOT NULL,
-        gameID INT NOT NULL,
-        review TEXT,
-        rating INT NOT NULL,
-        CONSTRAINT fk_reviews_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE,
-        CONSTRAINT fk_reviews_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE,
-        CHECK (rating >= 1 AND rating <= 100)
-    );
+-- Create Reviews Table and Insert Data
+-- Uses ON DELETE CASCADE to remove reviews if associated user or game is deleted
+CREATE TABLE Reviews (
+    reviewID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    gameID INT NOT NULL,
+    review TEXT,
+    rating INT NOT NULL,
+    CONSTRAINT fk_reviews_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE,
+    CONSTRAINT fk_reviews_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE,
+    CHECK (rating >= 1 AND rating <= 100)
+);
 
-    INSERT INTO Reviews (userID, gameID, review, rating) VALUES
-        (1, 1, 'This is the best game ever!', 100),
-        (3, 2, 'I cannot believe they shipped this game with all these bugs.', 23),
-        (2, 3, 'Not even scary.', 88);
+INSERT INTO Reviews (userID, gameID, review, rating) VALUES
+    (1, 1, 'This is the best game ever!', 100),
+    (3, 2, 'I cannot believe they shipped this game with all these bugs.', 23),
+    (2, 3, 'Not even scary.', 88);
 
-    -- Create Lists Table and Insert Data
-    -- Uses ON DELETE CASCADE to remove lists if associated user is deleted
-    CREATE TABLE Lists (
-        listID INT AUTO_INCREMENT PRIMARY KEY,
-        userID INT NOT NULL,
-        listName VARCHAR(250) NOT NULL,
-        isPublic BOOLEAN NOT NULL,
-        CONSTRAINT fk_lists_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE
-    );
+-- Create Lists Table and Insert Data
+-- Uses ON DELETE CASCADE to remove lists if associated user is deleted
+CREATE TABLE Lists (
+    listID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    listName VARCHAR(250) NOT NULL,
+    isPublic BOOLEAN NOT NULL,
+    CONSTRAINT fk_lists_user FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE
+);
 
-    INSERT INTO Lists (userID, listName, isPublic) VALUES
-        (2, 'Must Plays', TRUE),
-        (3, 'Top RPGs', TRUE),
-        (1, 'Buggiest Games', FALSE);
+INSERT INTO Lists (userID, listName, isPublic) VALUES
+    (2, 'Must Plays', TRUE),
+    (3, 'Top RPGs', TRUE),
+    (1, 'Buggiest Games', FALSE);
 
-    -- Create ListsToGames Table and Insert Data
-    -- Uses ON DELETE CASCADE to remove entries if associated list or game is deleted
-    CREATE TABLE ListsToGames (
-        gamesListID INT AUTO_INCREMENT PRIMARY KEY,
-        listID INT NOT NULL,
-        gameID INT NOT NULL,
-        CONSTRAINT fk_ltg_list FOREIGN KEY (listID) REFERENCES Lists(listID) ON DELETE CASCADE,
-        CONSTRAINT fk_ltg_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE
-    );
+-- Create ListsToGames Table and Insert Data
+-- Uses ON DELETE CASCADE to remove entries if associated list or game is deleted
+CREATE TABLE ListsToGames (
+    gamesListID INT AUTO_INCREMENT PRIMARY KEY,
+    listID INT NOT NULL,
+    gameID INT NOT NULL,
+    CONSTRAINT fk_ltg_list FOREIGN KEY (listID) REFERENCES Lists(listID) ON DELETE CASCADE,
+    CONSTRAINT fk_ltg_game FOREIGN KEY (gameID) REFERENCES Games(gameID) ON DELETE CASCADE
+);
 
-    INSERT INTO ListsToGames (listID, gameID) VALUES
-        (2, 1),
-        (1, 3),
-        (3, 2);
+INSERT INTO ListsToGames (listID, gameID) VALUES
+    (2, 1),
+    (1, 3),
+    (3, 2);
     
-    SET FOREIGN_KEY_CHECKS = 1;
-    COMMIT;
-
-END //
-DELIMITER ;
+SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;
