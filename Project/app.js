@@ -146,6 +146,7 @@ app.get('/liststogames', async function (req, res) {
   }
 })
 
+// LISTS TO GAMES - Delete
 app.post('/liststogames/delete', async function (req, res) {
   try {
     let data = req.body
@@ -159,6 +160,7 @@ app.post('/liststogames/delete', async function (req, res) {
   }
 })
 
+// LISTS TO GAMES - Update
 app.post('/liststogames/update', async function (req, res) {
   try {
     const data = req.body
@@ -175,7 +177,7 @@ app.post('/liststogames/update', async function (req, res) {
   }
 })
 
-//CREATE LISTS TO GAMES - WIP
+//CREATE LISTS TO GAMES
 app.post('/liststogames/create', async function (req, res) {
   try {
     //Parse frontend form

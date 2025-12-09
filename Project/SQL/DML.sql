@@ -8,9 +8,9 @@
 -- Based on instructions provided in explorations from OSU course CS340 - Introduction To Databases.
 -- If AI tools were used: No AI was used in the creation of this file.
 
-=================================================
+
 -- Games Queries
-=================================================
+
 -- Get all games for the Games page.
 SELECT
     Games.gameID,
@@ -28,9 +28,9 @@ FROM
 ORDER BY
     title;
 
-=================================================
+
 -- Users Queries
-=================================================
+
 -- Get all users for the Users page.
 SELECT 
     Users.userID,
@@ -38,9 +38,9 @@ SELECT
     Users.email as Email
  FROM Users;
 
-=================================================
+
 -- Reviews Queries
-=================================================
+
 -- Get all reviews for the Reviews page.
 SELECT
     Reviews.reviewID,
@@ -53,9 +53,9 @@ INNER JOIN Reviews ON Users.userID = Reviews.userID
 INNER JOIN Games ON Reviews.gameID = Games.gameID
 ORDER BY Reviews.rating DESC;
 
-=================================================
+
 -- Lists Queries
-=================================================
+
 -- Get all lists for the Lists page.
 SELECT
     Lists.listID,
@@ -73,9 +73,9 @@ FROM
 ORDER BY 
     listName;
 
-=================================================
+
 -- ListsToGames Queries
-=================================================
+
 -- Get all public lists for the ListsToGames page.
 SELECT
     ListsToGames.gamesListID,
